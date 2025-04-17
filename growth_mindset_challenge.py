@@ -3,7 +3,6 @@ import pandas as pd
 import random
 from datetime import datetime
 
-# --- Encouraging Quotes ---
 quotes = [
     "You don’t have to be perfect, just consistent.",
     "Every time you resist, you rewrite your story.",
@@ -12,14 +11,13 @@ quotes = [
     "You're not failing – you're learning how to win."
 ]
 
-# --- Page Config ---
+
 st.set_page_config(page_title="Break the Habit Tracker", layout="centered")
 
-# --- App Title ---
+
 st.title("🚫 Break the Habit: Self-Improvement Tracker")
 st.markdown("<h2 style='font-size: 28px;'>Log your journey to quitting a bad habit. Reflect, grow, and win each day.</h2>", unsafe_allow_html=True)
 
-# --- Custom CSS to increase font size for text (except title) ---
 st.markdown("""
     <style>
     .streamlit-expanderHeader, .streamlit-expanderContent {
@@ -37,7 +35,7 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# --- Form Section ---
+
 with st.form("habit_form"):
     did_resist = st.radio("🛑 Did you resist the habit today?", ["Yes", "No"])
     trigger = st.text_input("⚠️ What triggered the urge?")
@@ -46,11 +44,11 @@ with st.form("habit_form"):
     plan = st.text_input("📌 What will you do differently next time?")
     submitted = st.form_submit_button("Log Today's Reflection")
 
-# --- Session State ---
+
 if "habit_log" not in st.session_state:
     st.session_state.habit_log = []
 
-# --- Handle Submission ---
+
 if submitted and (trigger or response or feeling):
     log_entry = {
         "Date": datetime.now().strftime("%Y-%m-%d %H:%M"),
@@ -71,13 +69,11 @@ if submitted and (trigger or response or feeling):
         st.markdown(f"**🧠 Feeling After:** {log_entry['Feeling']}")
         st.markdown(f"**📌 Plan for Next Time:** {log_entry['Next Time Plan']}")
 
-# --- Display All Logs ---
 if st.session_state.habit_log:
     st.subheader("📘 Your Habit Journey")
     df = pd.DataFrame(st.session_state.habit_log)
     st.dataframe(df, use_container_width=True)
 
-# --- Encouraging Quote ---
 st.markdown("### 🌟 Encouraging Quote")
 st.info(random.choice(quotes))
 
